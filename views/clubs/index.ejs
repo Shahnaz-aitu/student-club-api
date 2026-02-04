@@ -1,0 +1,31 @@
+<%- include('../partials/head', { title: 'Clubs' }) %>
+<%- include('../partials/nav') %>
+
+<main class="container">
+  <div class="page-head">
+    <h2>Clubs</h2>
+    <% if (currentUser && currentUser.role === 'admin') { %>
+      <a class="btn btn-small" href="/clubs/admin/new">+ Add club</a>
+    <% } %>
+  </div>
+
+  <div class="cards">
+    <% clubs.forEach((c) => { %>
+      <a class="card club" href="/clubs/<%= c._id %>">
+        <div class="top">
+          <h3><%= c.name %></h3>
+          <% if (myClubIds.includes(String(c._id))) { %>
+            <span class="badge">Member</span>
+          <% } %>
+        </div>
+        <p class="muted"><%= (c.description || '').slice(0, 110) %>...</p>
+        <div class="meta">
+          <span>📍 <%= c.location || 'TBA' %></span>
+          <span>🕒 <%= c.meetingTime || 'TBA' %></span>
+        </div>
+      </a>
+    <% }) %>
+  </div>
+</main>
+
+<%- include('../partials/foot') %>

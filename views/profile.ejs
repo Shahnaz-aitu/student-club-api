@@ -1,0 +1,48 @@
+<%- include('partials/head', { title: 'Profile' }) %>
+<%- include('partials/nav') %>
+
+<main class="container">
+  <div class="grid">
+    <section class="card">
+      <h2>My profile</h2>
+
+      <% if (success) { %><div class="alert success"><%= success %></div><% } %>
+      <% if (error) { %><div class="alert"><%= error %></div><% } %>
+
+      <div class="profile">
+        <div><strong>Role:</strong> <%= user.role %></div>
+        <div><strong>Registered:</strong> <%= new Date(user.createdAt).toLocaleDateString() %></div>
+      </div>
+
+      <form class="form" method="POST" action="/users/profile?_method=PUT">
+        <label>Username
+          <input name="username" required minlength="2" value="<%= user.username %>"/>
+        </label>
+        <label>Email
+          <input name="email" type="email" required value="<%= user.email %>"/>
+        </label>
+        <button class="btn" type="submit">Update</button>
+      </form>
+    </section>
+
+    <aside class="card">
+      <h3>My clubs</h3>
+      <% if (user.role === 'admin') { %>
+        <p class="muted">Admin manages clubs (no join).</p>
+      <% } else { %>
+        <% if (!user.clubs || user.clubs.length === 0) { %>
+          <p class="muted">No clubs yet.</p>
+        <% } else { %>
+          <ul>
+            <% user.clubs.forEach((c) => { %>
+              <li><a href="/clubs/<%= c._id %>"><%= c.name %></a></li>
+            <% }) %>
+          </ul>
+        <% } %>
+        <p class="muted">Min 1, max 3 clubs.</p>
+      <% } %>
+    </aside>
+  </div>
+</main>
+
+<%- include('partials/foot') %>

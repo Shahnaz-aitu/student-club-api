@@ -1,0 +1,12 @@
+<%- include('partials/head', { title: status }) %>
+<%- include('partials/nav') %>
+
+<main class="container">
+  <div class="card narrow">
+    <h2><%= status %></h2>
+    <p class="muted"><%= message %></p>
+    <a class="btn btn-ghost" href="/clubs">Back</a>
+  </div>
+</main>
+
+<%- include('partials/foot') %>

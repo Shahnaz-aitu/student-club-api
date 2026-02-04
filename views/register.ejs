@@ -1,0 +1,28 @@
+<%- include('partials/head', { title: 'Register' }) %>
+<%- include('partials/nav') %>
+
+<main class="container">
+  <div class="card narrow">
+    <h2>Register</h2>
+    <p class="muted">Password: 8+ with uppercase, lowercase, number.</p>
+
+    <% if (success) { %><div class="alert success"><%= success %></div><% } %>
+    <% if (error) { %><div class="alert"><%= error %></div><% } %>
+
+    <form class="form" method="POST" action="/register">
+      <label>Username
+        <input name="username" required minlength="2" value="<%= values.username || '' %>"/>
+      </label>
+      <label>Email
+        <input name="email" type="email" required value="<%= values.email || '' %>"/>
+      </label>
+      <label>Password
+        <input name="password" type="password" required minlength="8"/>
+      </label>
+      <button class="btn" type="submit">Create account</button>
+      <p class="muted">Already have account? <a href="/login">Login</a></p>
+    </form>
+  </div>
+</main>
+
+<%- include('partials/foot') %>

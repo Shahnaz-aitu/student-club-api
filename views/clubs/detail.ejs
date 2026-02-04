@@ -1,0 +1,47 @@
+<%- include('../partials/head', { title: club.name }) %>
+<%- include('../partials/nav') %>
+
+<main class="container">
+  <div class="card">
+    <div class="page-head">
+      <h2><%= club.name %></h2>
+
+      <% if (currentUser.role === 'admin') { %>
+        <div class="row">
+          <a class="btn btn-ghost btn-small" href="/clubs/admin/<%= club._id %>/edit">Edit</a>
+          <form class="inline" method="POST" action="/clubs/<%= club._id %>?_method=DELETE">
+            <button class="btn btn-danger btn-small" type="submit">Delete</button>
+          </form>
+        </div>
+      <% } %>
+    </div>
+
+    <% if (error) { %><div class="alert"><%= error %></div><% } %>
+
+    <p><%= club.description %></p>
+    <div class="meta">
+      <span>📍 <%= club.location || 'TBA' %></span>
+      <span>🕒 <%= club.meetingTime || 'TBA' %></span>
+    </div>
+
+    <% if (currentUser.role === 'user') { %>
+      <div class="row">
+        <% if (!isMember) { %>
+          <form method="POST" action="/clubs/<%= club._id %>/join">
+            <button class="btn" type="submit">Join</button>
+          </form>
+        <% } else { %>
+          <form method="POST" action="/clubs/<%= club._id %>/leave">
+            <button class="btn btn-ghost" type="submit">Leave</button>
+          </form>
+        <% } %>
+      </div>
+    <% } %>
+
+    <div class="row" style="margin-top:10px">
+      <a class="btn btn-ghost btn-small" href="/clubs">← Back</a>
+    </div>
+  </div>
+</main>
+
+<%- include('../partials/foot') %>

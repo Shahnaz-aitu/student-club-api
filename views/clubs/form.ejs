@@ -1,0 +1,33 @@
+<%- include('../partials/head', { title: mode === 'create' ? 'Add club' : 'Edit club' }) %>
+<%- include('../partials/nav') %>
+
+<main class="container">
+  <div class="card narrow">
+    <h2><%= mode === 'create' ? 'Add club' : 'Edit club' %></h2>
+
+    <% if (error) { %><div class="alert"><%= error %></div><% } %>
+
+    <form class="form" method="POST" action="<%= mode === 'create' ? '/clubs' : '/clubs/' + club._id + '?_method=PUT' %>">
+      <label>Name
+        <input name="name" required minlength="2" value="<%= club.name || '' %>"/>
+      </label>
+
+      <label>Description
+        <textarea name="description" required minlength="10"><%= club.description || '' %></textarea>
+      </label>
+
+      <label>Location
+        <input name="location" value="<%= club.location || '' %>"/>
+      </label>
+
+      <label>Meeting time
+        <input name="meetingTime" value="<%= club.meetingTime || '' %>"/>
+      </label>
+
+      <button class="btn" type="submit"><%= mode === 'create' ? 'Create' : 'Save' %></button>
+      <a class="btn btn-ghost" href="/clubs">Cancel</a>
+    </form>
+  </div>
+</main>
+
+<%- include('../partials/foot') %>
